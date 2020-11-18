@@ -1,4 +1,4 @@
-package `in`.novopay.novoloan.util.coroutine
+package com.asutosh.util.coroutine
 
 import kotlinx.coroutines.*
 
