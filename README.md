@@ -21,7 +21,7 @@ implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9'
 CoroutineTask.kt
 ```
 
-#### Usage in Kotlin
+#### Example usage in Kotlin
 
 ```Kotlin
 val asyncTask = object: CoroutineTask <Void, Void, String> () {
@@ -44,7 +44,7 @@ asyncTask.execute()
 asyncTask.cancel(true)
 ```
 
-#### Usage in Java
+#### Example usage in Java
 
 ```Java
 CoroutineTask asyncTask = new CoroutineTask <Void, Void, String> () {
