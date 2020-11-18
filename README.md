@@ -11,6 +11,11 @@ You don't need to change anything in your AsyncTask's methods, parameters or log
 ## How to use? 
 In the same way you use AsyncTask, just replace the keyword <b>AsyncTask</b> with <b>CoroutineTask</b>
 
+#### gradle dependency
+```groovy
+implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9'
+```
+
 #### In Kotlin
 
 ```Kotlin
