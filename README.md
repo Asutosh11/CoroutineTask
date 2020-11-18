@@ -11,12 +11,17 @@ You don't need to change anything in your AsyncTask's methods, parameters or log
 ## How to use? 
 In the same way you use AsyncTask, just replace the keyword <b>AsyncTask</b> with <b>CoroutineTask</b>
 
-#### build.gradle dependency
+#### Add build.gradle dependency
 ```groovy
 implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9'
 ```
 
-#### In Kotlin
+#### Paste this file somewhere in your codebase
+```text
+CoroutineTask.kt
+```
+
+#### Usage in Kotlin
 
 ```Kotlin
 val asyncTask = object: CoroutineTask <Void, Void, String> () {
@@ -39,7 +44,7 @@ asyncTask.execute()
 asyncTask.cancel(true)
 ```
 
-#### In Java
+#### Usage in Java
 
 ```Java
 CoroutineTask asyncTask = new CoroutineTask <Void, Void, String> () {
