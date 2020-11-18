@@ -14,7 +14,7 @@ In the same way you use AsyncTask
 #### In Kotlin
 
 ```Kotlin
-val asyncTask = object: CoroutineTask < Void, Void, String > () {
+val asyncTask = object: CoroutineTask <Void, Void, String> () {
 
     override fun onPreExecute() {}
 
@@ -37,7 +37,7 @@ asyncTask.cancel(true)
 #### In Java
 
 ```Java
-CoroutineTask asyncTask = new CoroutineTask < Void, Void, String > () {
+CoroutineTask asyncTask = new CoroutineTask <Void, Void, String> () {
 
     @Override
     public void onPreExecute() {}
