@@ -16,7 +16,7 @@ In the same way you use AsyncTask, just replace the keyword <b>AsyncTask</b> wit
 implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9'
 ```
 
-#### Paste this file somewhere in your codebase
+#### Save this file somewhere in your codebase
 ```text
 CoroutineTask.kt
 ```
