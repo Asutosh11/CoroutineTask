@@ -15,6 +15,9 @@ abstract class CoroutineTask<Params, Progress, Result> {
     val uiScope = CoroutineScope(Dispatchers.Main)
     val backgroundScope = CoroutineScope(Dispatchers.IO)
     var result: Result? = null
+    var preExecuteJob : Job? = null
+    var postExecuteJob : Job? = null
+    var doInBackgroundJob : Job? = null
 
     abstract fun onPreExecute()
 
@@ -28,23 +31,33 @@ abstract class CoroutineTask<Params, Progress, Result> {
 
     open fun execute(vararg params: Params) {
 
-        uiScope.launch {
+        preExecuteJob = uiScope.launch {
 
             onPreExecute()
-            backgroundScope.launch {
 
-                result = doInBackground(*params)
-                uiScope.launch {
-                    onPostExecute(result)
+            backgroundScope.async {
+
+                if(backgroundScope.isActive){
+                    result = doInBackground(*params)
+                    postExecuteJob = uiScope.launch {
+                        onPostExecute(result)
+                    }
                 }
-            }
+            }.await()
         }
     }
 
     open fun cancel(hasToCancel: Boolean){
-        if(backgroundScope.isActive && hasToCancel){
-            backgroundScope.cancel()
-            onCancelled()
+        if(preExecuteJob?.isActive?:false && hasToCancel){
+            preExecuteJob!!.cancel()
         }
+        if(backgroundScope.isActive && hasToCancel){
+            doInBackgroundJob!!.cancel()
+        }
+        if(postExecuteJob?.isActive?:false && hasToCancel){
+            postExecuteJob!!.cancel()
+        }
+        onCancelled()
     }
 }
+
