@@ -72,7 +72,8 @@ coroutineTask.cancel(true);
 ```
 
 #### How to cancel the task?
-Cancel the CoroutineTask like this
+Unlike AsyncTask, when the calling Activity is destroyed, CoroutineTask gets destroyed. <br/>
+Aditionally you can use this (gets cancelled after the work is done) -  
 ```
 asyncTask.cancel(true);
 ```
