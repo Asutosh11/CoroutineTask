@@ -2,7 +2,6 @@ package com.asutosh.util.coroutine
 
 import kotlinx.coroutines.*
 
-
 abstract class CoroutineTask<Params, Progress, Result> {
 
     /* AsyncTask has been deprecated from Android 11
@@ -15,9 +14,6 @@ abstract class CoroutineTask<Params, Progress, Result> {
     val uiScope = CoroutineScope(Dispatchers.Main)
     val backgroundScope = CoroutineScope(Dispatchers.Default)
     var result: Result? = null
-    var preExecuteJob : Job? = null
-    var postExecuteJob : Job? = null
-    var doInBackgroundJob : Job? = null
 
     abstract fun onPreExecute()
 
@@ -31,28 +27,36 @@ abstract class CoroutineTask<Params, Progress, Result> {
 
     open fun execute(vararg params: Params) {
 
-        preExecuteJob = uiScope.launch {
+       uiScope.launch {
 
-            onPreExecute()
+           uiScope.launch {
+               onPreExecute()
 
-            doInBackgroundJob = backgroundScope.async {
+               val result = backgroundScope.async {
+                   doInBackground(*params)
+               }
 
-                if(backgroundScope.isActive){
-                    result = doInBackground(*params)
-                    postExecuteJob = uiScope.launch {
-                        onPostExecute(result = result)
-                    }
-                }
-            }
-        }
+               uiScope.launch {
+                   onPostExecute(result.await())
+               }
+           }
+       }
     }
 
     open fun cancel(hasToCancel: Boolean){
         if(hasToCancel){
-            preExecuteJob?.cancel("coroutine cancelled by user")
-            postExecuteJob?.cancel("coroutine cancelled by user")
-            doInBackgroundJob?.cancel("coroutine cancelled by user")
-            onCancelled()
+            uiScope.cancel("coroutine cancelled by user")
+            backgroundScope.cancel("coroutine cancelled by user")
+            uiScope.launch {
+                onPostExecute(null)
+                onCancelled()
+            }
+        }
+    }
+
+    fun publishProgress(vararg progress: Progress) {
+        uiScope.launch{
+             onProgressUpdate(*progress)
         }
     }
 }
