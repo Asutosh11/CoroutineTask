@@ -7,13 +7,13 @@ abstract class CoroutineTask<Params, Progress, Result> {
 
     /* AsyncTask has been deprecated from Android 11
      *
-     * CoroutineTask is the solution, if you want to seamlessly update your AsyncTasks to Coroutines.
+     * CoroutineTask is a utility Class, if you want to seamlessly update your AsyncTasks to Coroutines.
      * You don't need to change anything in your AsyncTask methods, parameters or logic.
      * It Doesn't matter if your classes are in Java or Kotlin.
      */
 
     val uiScope = CoroutineScope(Dispatchers.Main)
-    val backgroundScope = CoroutineScope(Dispatchers.IO)
+    val backgroundScope = CoroutineScope(Dispatchers.Default)
     var result: Result? = null
     var preExecuteJob : Job? = null
     var postExecuteJob : Job? = null
@@ -35,27 +35,24 @@ abstract class CoroutineTask<Params, Progress, Result> {
 
             onPreExecute()
 
-            backgroundScope.async {
+            doInBackgroundJob = backgroundScope.async {
 
                 if(backgroundScope.isActive){
                     result = doInBackground(*params)
                     postExecuteJob = uiScope.launch {
-                        onPostExecute(result)
+                        onPostExecute(result = result)
                     }
                 }
-            }.await()
+            }
         }
     }
 
     open fun cancel(hasToCancel: Boolean){
-        if(preExecuteJob?.isActive?:false && hasToCancel){
-            preExecuteJob!!.cancel()
+        if(uiScope.isActive && hasToCancel){
+            uiScope.cancel("coroutine cancelled by user")
         }
         if(backgroundScope.isActive && hasToCancel){
-            backgroundScope.cancel()
-        }
-        if(postExecuteJob?.isActive?:false && hasToCancel){
-            postExecuteJob!!.cancel()
+            doInBackgroundJob?.cancel("coroutine cancelled by user")
         }
         onCancelled()
     }
