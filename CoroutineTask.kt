@@ -52,7 +52,7 @@ abstract class CoroutineTask<Params, Progress, Result> {
             preExecuteJob!!.cancel()
         }
         if(backgroundScope.isActive && hasToCancel){
-            doInBackgroundJob!!.cancel()
+            backgroundScope.cancel()
         }
         if(postExecuteJob?.isActive?:false && hasToCancel){
             postExecuteJob!!.cancel()
