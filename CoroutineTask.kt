@@ -7,7 +7,7 @@ abstract class CoroutineTask<Params, Progress, Result> {
 
     /* AsyncTask has been deprecated from Android 11
      *
-     * CoroutineTask is a utility Class, if you want to seamlessly update your AsyncTasks to Coroutines.
+     * CoroutineTask is a Utility class, if you want to seamlessly update your AsyncTasks to Coroutines.
      * You don't need to change anything in your AsyncTask methods, parameters or logic.
      * It Doesn't matter if your classes are in Java or Kotlin.
      */
@@ -48,13 +48,11 @@ abstract class CoroutineTask<Params, Progress, Result> {
     }
 
     open fun cancel(hasToCancel: Boolean){
-        if(uiScope.isActive && hasToCancel){
-            uiScope.cancel("coroutine cancelled by user")
-        }
-        if(backgroundScope.isActive && hasToCancel){
+        if(hasToCancel){
+            preExecuteJob?.cancel("coroutine cancelled by user")
+            postExecuteJob?.cancel("coroutine cancelled by user")
             doInBackgroundJob?.cancel("coroutine cancelled by user")
+            onCancelled()
         }
-        onCancelled()
     }
 }
-
