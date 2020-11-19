@@ -4,7 +4,7 @@
 <em>AsyncTask has been deprecated in Android 11.</em> <br/>
 There are a lot of alternatives to AsyncTask like RxJava, Services, Coroutines, etc.
 
-<b>CoroutineTask is a utility that has the same structure as AsyncTask but uses Coroutines underneath</b><br/>
+<b>CoroutineTask is a utility that has the same structure as AsyncTask but uses Kotlin Coroutines underneath</b><br/>
 
 
 ## How to use? 
