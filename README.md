@@ -71,8 +71,8 @@ coroutineTask.execute();
 coroutineTask.cancel(true);
 ```
 
-#### Keep in mind to avoid memory leaks
-Cancel the CoroutineTask on onDestroy of the Activity
+#### How to cancel the task?
+Cancel the CoroutineTask like this
 ```
 asyncTask.cancel(true);
 ```
