@@ -39,8 +39,6 @@ val asyncTask = object: CoroutineTask <Void, Void, String> () {
 }
 
 asyncTask.execute()
-// if you have to cancel it
-asyncTask.cancel(true)
 ```
 
 #### Example usage in Java
@@ -66,8 +64,6 @@ CoroutineTask asyncTask = new CoroutineTask <Void, Void, String> () {
 };
 
 coroutineTask.execute();
-// if you have to cancel it
-coroutineTask.cancel(true);
 ```
 
 #### How to cancel the task?
