@@ -63,7 +63,7 @@ CoroutineTask asyncTask = new CoroutineTask <Void, Void, String> () {
     }
 };
 
-coroutineTask.execute();
+asyncTask.execute();
 ```
 
 #### How to cancel the task?
