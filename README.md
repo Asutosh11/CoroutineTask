@@ -23,7 +23,7 @@ CoroutineTask.kt
 #### Example 1: usage in Kotlin
 
 ```Kotlin
-val asyncTask = object: CoroutineTask < String ? , Int ? , String ? > () {
+val asyncTask = object: CoroutineTask <String ? , Int ? , String ?> () {
 
     override fun onPreExecute() {}
 
@@ -53,9 +53,9 @@ asyncTask.execute("background work completed")
 
 #### Example 2: usage in Kotlin
 ```Kotlin
-val asyncTask: CoroutineTask < Void ? , Void ? , String ? > =
+val asyncTask: CoroutineTask <Void ? , Void ? , String ?> =
 
-    object : CoroutineTask < Void ? , Void ? , String ? > () {
+    object : CoroutineTask <Void ? , Void ? , String ?> () {
 
         override fun onPreExecute() {
             // do something
@@ -105,7 +105,7 @@ asyncTask.execute();
 
 #### Example 4: usage in Java (Simplest usage)
 ```Java
-CoroutineTask asyncTask = new CoroutineTask < Void, Void, String > () {
+CoroutineTask asyncTask = new CoroutineTask <Void, Void, String> () {
 
     @Override
     public void onPreExecute() {}
