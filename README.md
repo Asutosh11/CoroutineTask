@@ -59,7 +59,34 @@ val asyncTask: CoroutineTask < String ? , Int ? , String ? > =
 asyncTask.execute("background work completed")
 ```
 
-#### Example usage in Java
+#### Example 2: usage in Kotlin
+```Kotlin
+val asyncTask: CoroutineTask < Void ? , Void ? , String ? > =
+
+    object : CoroutineTask < Void ? , Void ? , String ? > () {
+
+        override fun onPreExecute() {
+            // do something
+        }
+
+        override fun doInBackground(vararg params: Void ? ): String ? {
+            return ""
+        }
+
+        override fun onPostExecute(result: String ? ) {
+            // do something
+        }
+
+        override fun onCancelled() {
+            // optional
+        }
+
+    }
+
+asyncTask.execute()
+```
+
+#### Example 3: usage in Java
 
 ```Java
 CoroutineTask asyncTask = new CoroutineTask <Void, Void, String> () {
