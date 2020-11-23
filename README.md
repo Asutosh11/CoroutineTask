@@ -23,38 +23,30 @@ CoroutineTask.kt
 #### Example 1: usage in Kotlin
 
 ```Kotlin
-val asyncTask: CoroutineTask < String ? , Int ? , String ? > =
+val asyncTask = object: CoroutineTask < String ? , Int ? , String ? > () {
 
-    object : CoroutineTask < String ? , Int ? , String ? > () {
+    override fun onPreExecute() {}
 
-        override fun onPreExecute() {
-            // do something
+    override fun doInBackground(vararg params: String ? ): String ? {
+
+        for (i in 0. .100000) {
+            // optional, publishing the progress
+            val progress: Int = (i / 1000)
+            publishProgress(progress)
         }
-
-        override fun doInBackground(vararg params: String ? ): String ? {
-
-            for (i in 0..100000) {
-                // optional, publishing the progress
-                val progress: Int = (i / 1000)
-                publishProgress(progress)
-            }
-
-            return params[0]
-        }
-
-        override fun onPostExecute(result: String ? ) {
-            Toast.makeText(applicationContext, result, LENGTH_LONG).show()
-        }
-
-        override fun onCancelled() {
-            // optional
-        }
-
-        override fun onProgressUpdate(progress: Int ? ) {
-            // optional, can be used to print the progress on a progress bar
-            Log.i("progress: ", "" + progress)
-        }
+        return params[0]
     }
+
+    override fun onPostExecute(result: String ? ) {
+        Toast.makeText(applicationContext, result, LENGTH_LONG).show()
+    }
+
+    override fun onCancelled() {}
+
+    override fun onProgressUpdate(progress: Int ? ) {
+        Log.i("progress: ", "" + progress)
+    }
+}
 
 asyncTask.execute("background work completed")
 ```
@@ -106,6 +98,25 @@ CoroutineTask asyncTask = new CoroutineTask <Void, Void, String> () {
     public void onCancelled() {
         // optional
     }
+};
+
+asyncTask.execute();
+```
+
+#### Example 4: usage in Java (Simplest usage)
+```Java
+CoroutineTask asyncTask = new CoroutineTask < Void, Void, String > () {
+
+    @Override
+    public void onPreExecute() {}
+
+    @Override
+    public String doInBackground(Void...params) {
+        return "";
+    }
+
+    @Override
+    public void onPostExecute(String result) {}
 };
 
 asyncTask.execute();
