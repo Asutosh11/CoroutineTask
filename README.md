@@ -23,11 +23,11 @@ CoroutineTask.kt
 #### Example 1: usage in Kotlin
 
 ```Kotlin
-val asyncTask = object: CoroutineTask <String ? , Int ? , String ?> () {
+val asyncTask = object: CoroutineTask <String?, Int?, String?>() {
 
     override fun onPreExecute() {}
 
-    override fun doInBackground(vararg params: String ? ): String ? {
+    override fun doInBackground(vararg params: String?): String? {
 
         for (i in 0. .100000) {
             // optional, publishing the progress
@@ -37,13 +37,13 @@ val asyncTask = object: CoroutineTask <String ? , Int ? , String ?> () {
         return params[0]
     }
 
-    override fun onPostExecute(result: String ? ) {
+    override fun onPostExecute(result: String?) {
         Toast.makeText(applicationContext, result, LENGTH_LONG).show()
     }
 
     override fun onCancelled() {}
 
-    override fun onProgressUpdate(progress: Int ? ) {
+    override fun onProgressUpdate(progress: Int?) {
         Log.i("progress: ", "" + progress)
     }
 }
@@ -53,19 +53,19 @@ asyncTask.execute("background work completed")
 
 #### Example 2: usage in Kotlin
 ```Kotlin
-val asyncTask: CoroutineTask <Void ? , Void ? , String ?> =
+val asyncTask: CoroutineTask <Void?, Void?, String?> =
 
-    object : CoroutineTask <Void ? , Void ? , String ?> () {
+    object : CoroutineTask <Void?, Void?, String?>() {
 
         override fun onPreExecute() {
             // do something
         }
 
-        override fun doInBackground(vararg params: Void ? ): String ? {
+        override fun doInBackground(vararg params: Void?): String? {
             return ""
         }
 
-        override fun onPostExecute(result: String ? ) {
+        override fun onPostExecute(result: String?) {
             // do something
         }
 
@@ -81,13 +81,13 @@ asyncTask.execute()
 #### Example 3: usage in Java
 
 ```Java
-CoroutineTask asyncTask = new CoroutineTask <Void, Void, String> () {
+CoroutineTask asyncTask = new CoroutineTask <Void, Void, String>() {
 
     @Override
     public void onPreExecute() {}
 
     @Override
-    public String doInBackground(Void...params) {
+    public String doInBackground(Void... params) {
         return "";
     }
 
@@ -105,13 +105,13 @@ asyncTask.execute();
 
 #### Example 4: usage in Java (Simplest usage)
 ```Java
-CoroutineTask asyncTask = new CoroutineTask <Void, Void, String> () {
+CoroutineTask asyncTask = new CoroutineTask <Void, Void, String>() {
 
     @Override
     public void onPreExecute() {}
 
     @Override
-    public String doInBackground(Void...params) {
+    public String doInBackground(Void... params) {
         return "";
     }
 
