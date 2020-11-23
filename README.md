@@ -20,25 +20,43 @@ implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9'
 CoroutineTask.kt
 ```
 
-#### Example usage in Kotlin
+#### Example 1: usage in Kotlin
 
 ```Kotlin
-val asyncTask = object: CoroutineTask <Void, Void, String> () {
+val asyncTask: CoroutineTask < String ? , Int ? , String ? > =
 
-    override fun onPreExecute() {}
+    object : CoroutineTask < String ? , Int ? , String ? > () {
 
-    override fun doInBackground(vararg params: Void): String {
-        return ""
+        override fun onPreExecute() {
+            // do something
+        }
+
+        override fun doInBackground(vararg params: String ? ): String ? {
+
+            for (i in 0..100000) {
+                // optional, publishing the progress
+                val progress: Int = (i / 1000)
+                publishProgress(progress)
+            }
+
+            return params[0]
+        }
+
+        override fun onPostExecute(result: String ? ) {
+            Toast.makeText(applicationContext, result, LENGTH_LONG).show()
+        }
+
+        override fun onCancelled() {
+            // optional
+        }
+
+        override fun onProgressUpdate(progress: Int ? ) {
+            // optional, can be used to print the progress on a progress bar
+            Log.i("progress: ", "" + progress)
+        }
     }
 
-    override fun onPostExecute(result: String ? ) {}
-
-    override fun onCancelled() {
-        // optional
-    }
-}
-
-asyncTask.execute()
+asyncTask.execute("background work completed")
 ```
 
 #### Example usage in Java
@@ -50,7 +68,7 @@ CoroutineTask asyncTask = new CoroutineTask <Void, Void, String> () {
     public void onPreExecute() {}
 
     @Override
-    public String doInBackground(Void...params) 
+    public String doInBackground(Void...params) {
         return "";
     }
 
