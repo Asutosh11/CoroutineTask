@@ -17,13 +17,13 @@ abstract class CoroutineTask<Params, Progress, Result> {
 
     abstract fun onPreExecute()
 
-    abstract fun doInBackground(vararg params: Params): Result
+    abstract fun doInBackground(vararg params: Params?): Result
 
     abstract fun onPostExecute(result: Result?)
 
     open fun onCancelled(){}
 
-    open fun onProgressUpdate(vararg progress: Progress) {}
+    open fun onProgressUpdate(progress: Progress?) {}
 
     open fun execute(vararg params: Params) {
 
@@ -32,7 +32,7 @@ abstract class CoroutineTask<Params, Progress, Result> {
            uiScope.launch {
                onPreExecute()
 
-               val result = backgroundScope.async {
+               var result = backgroundScope.async {
                    doInBackground(*params)
                }
 
@@ -54,9 +54,9 @@ abstract class CoroutineTask<Params, Progress, Result> {
         }
     }
 
-    fun publishProgress(vararg progress: Progress) {
+    fun publishProgress(progress: Progress) {
         uiScope.launch{
-             onProgressUpdate(*progress)
+             onProgressUpdate(progress)
         }
     }
 }
