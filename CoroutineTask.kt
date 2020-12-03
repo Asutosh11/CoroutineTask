@@ -11,39 +11,39 @@ abstract class CoroutineTask<Params, Progress, Result> {
      * It Doesn't matter if your classes are in Java or Kotlin.
      */
 
-    val uiScope = CoroutineScope(Dispatchers.Main)
-    val backgroundScope = CoroutineScope(Dispatchers.Default)
-    var result: Result? = null
+    private val uiScope = CoroutineScope(Dispatchers.Main)
+    private val backgroundScope = CoroutineScope(Dispatchers.Default)
+    private var result: Result? = null
 
-    abstract fun onPreExecute()
+    protected abstract fun onPreExecute()
 
-    abstract fun doInBackground(vararg params: Params?): Result
+    protected abstract fun doInBackground(vararg params: Params?): Result
 
-    abstract fun onPostExecute(result: Result?)
+    protected abstract fun onPostExecute(result: Result?)
 
-    open fun onCancelled(){}
+    protected fun onCancelled(){}
 
-    open fun onProgressUpdate(progress: Progress?) {}
+    protected open fun onProgressUpdate(progress: Progress?) {}
 
-    open fun execute(vararg params: Params) {
+    fun execute(vararg params: Params) {
 
-       uiScope.launch {
+        uiScope.launch {
 
-           uiScope.launch {
-               onPreExecute()
+            uiScope.launch {
+                onPreExecute()
 
-               var result = backgroundScope.async {
-                   doInBackground(*params)
-               }
+                var result = backgroundScope.async {
+                    doInBackground(*params)
+                }
 
-               uiScope.launch {
-                   onPostExecute(result.await())
-               }
-           }
-       }
+                uiScope.launch {
+                    onPostExecute(result.await())
+                }
+            }
+        }
     }
 
-    open fun cancel(hasToCancel: Boolean){
+    fun cancel(hasToCancel: Boolean){
         if(hasToCancel){
             uiScope.cancel("coroutine cancelled by user")
             backgroundScope.cancel("coroutine cancelled by user")
@@ -54,9 +54,9 @@ abstract class CoroutineTask<Params, Progress, Result> {
         }
     }
 
-    fun publishProgress(progress: Progress) {
+    protected fun publishProgress(progress: Progress) {
         uiScope.launch{
-             onProgressUpdate(progress)
+            onProgressUpdate(progress)
         }
     }
 }
