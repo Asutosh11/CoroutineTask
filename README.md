@@ -84,18 +84,18 @@ asyncTask.execute()
 CoroutineTask asyncTask = new CoroutineTask <Void, Void, String>() {
 
     @Override
-    public void onPreExecute() {}
+    protected void onPreExecute() {}
 
     @Override
-    public String doInBackground(Void... params) {
+    protected String doInBackground(Void... params) {
         return "";
     }
 
     @Override
-    public void onPostExecute(String result) {}
+    protected void onPostExecute(String result) {}
 
     @Override
-    public void onCancelled() {
+    protected void onCancelled() {
         // optional
     }
 };
@@ -108,15 +108,15 @@ asyncTask.execute();
 CoroutineTask asyncTask = new CoroutineTask <Void, Void, String>() {
 
     @Override
-    public void onPreExecute() {}
+    protected void onPreExecute() {}
 
     @Override
-    public String doInBackground(Void... params) {
+    protected String doInBackground(Void... params) {
         return "";
     }
 
     @Override
-    public void onPostExecute(String result) {}
+    protected void onPostExecute(String result) {}
 };
 
 asyncTask.execute();
