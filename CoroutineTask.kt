@@ -21,7 +21,7 @@ abstract class CoroutineTask<Params, Progress, Result> {
 
     protected abstract fun onPostExecute(result: Result?)
 
-    protected fun onCancelled(){}
+    protected open fun onCancelled(){}
 
     protected open fun onProgressUpdate(progress: Progress?) {}
 
