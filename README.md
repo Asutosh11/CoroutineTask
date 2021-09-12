@@ -1,4 +1,4 @@
-# CoroutineTask 
+# CoroutineTask - AsyncTask from scratch using Coroutines
 <img src = "https://github.com/Asutosh11/CoroutineTask/blob/main/clock-image.png" height="100">
 
 <em>AsyncTask has been deprecated in Android 11.</em> <br/>
